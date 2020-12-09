@@ -17,18 +17,19 @@ exports.getAllTodos = async (req, res) => {
 				createdAt: doc.data().createdAt,
 			});
 		});
-		return res.json(todos);
+		res.json(todos);
 	} catch (error) {
 		console.error(error);
-		return res.status(500).json({ error: err.code });
+		res.status(500).json({ error: err.code });
 	}
 };
 
 exports.postOneTodo = async (req, res) => {
-	const { title, description } = req.body;
-	if (title === "") res.status(400).json("Title must not be empty");
-	if (description === "") res.status(400).json("descritpion must not be empty");
 	try {
+		const { title, description } = req.body;
+		if (title === "") res.status(400).json("Title must not be empty");
+		if (description === "")
+			res.status(400).json("descritpion must not be empty");
 		const todo = await db.collection("todos").add({
 			title: title,
 			description: description,
