@@ -15,7 +15,7 @@ exports.loginUser = async (req, res) => {
 
 		res.json({ token });
 	} catch (error) {
-		console.log(errpr);
+		console.log(error);
 		res.status(403).json({ general: "wrong credentials, please try again" });
 	}
 };
@@ -51,5 +51,18 @@ exports.signUpUser = async (req, res) => {
 				.status(500)
 				.json({ general: "Something went wrong, please try again" });
 		}
+	}
+};
+
+exports.resetPassword = async (req, res) => {
+	try {
+		const { email } = req.body;
+
+		await firebase.auth().sendPasswordResetEmail(email);
+
+		res.json("email sent");
+	} catch (error) {
+		console.log(error);
+		res.json(error);
 	}
 };

@@ -15,6 +15,7 @@ exports.getAllTodos = async (req, res) => {
 				title: doc.data().title,
 				description: doc.data().description,
 				createdAt: doc.data().createdAt,
+				user: doc.data().user,
 			});
 		});
 		res.json(todos);
@@ -26,6 +27,7 @@ exports.getAllTodos = async (req, res) => {
 
 exports.postOneTodo = async (req, res) => {
 	try {
+		console.log(res.locals.uid);
 		const { title, description } = req.body;
 		if (title === "") res.status(400).json("Title must not be empty");
 		if (description === "")
@@ -34,8 +36,9 @@ exports.postOneTodo = async (req, res) => {
 			title: title,
 			description: description,
 			createdAt: new Date().toISOString(),
+			user: res.locals.uid,
 		});
-		res.json(todo.id);
+		res.json(todo);
 	} catch (error) {
 		res.status(500).json({ error: "Something went wrong" });
 		console.error(error);

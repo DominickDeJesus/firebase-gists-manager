@@ -5,14 +5,16 @@ const app = require("express")();
 app.use(cors());
 
 const { getAllTodos, postOneTodo } = require("./api/todos");
-const { loginUser, signUpUser } = require("./api/users");
-
+const { loginUser, signUpUser, resetPassword } = require("./api/users");
+const { checkUser } = require("./util/security");
 //Todos
-app.get("/todos", getAllTodos);
-app.post("/todos", postOneTodo);
+app.get("/todos", checkUser, getAllTodos);
+app.post("/todos", checkUser, postOneTodo);
 
 //Users
+
 app.post("/login", loginUser);
 app.post("/signup", signUpUser);
+app.post("/password/reset", resetPassword);
 
 exports.api = functions.https.onRequest(app);
