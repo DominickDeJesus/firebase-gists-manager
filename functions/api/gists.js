@@ -22,7 +22,6 @@ exports.getGist = async (req, res) => {
     const gist = await octokit.gists.get({
       gist_id: req.params.id,
     });
-    console.log(gist);
     res.json(gist);
   } catch (error) {
     console.log(error.message);
@@ -31,7 +30,6 @@ exports.getGist = async (req, res) => {
 
 exports.createGist = async (req, res) => {
   try {
-    console.log(req.body);
     const { desc, filename, fileContent } = req.body;
     const gist = await octokit.gists.create(req.body);
     res.json(gist);
