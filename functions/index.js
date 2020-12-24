@@ -6,7 +6,7 @@ app.use(cors());
 const { getAllGists, createGist, getGist } = require("./api/gists");
 const { getAllTodos, postOneTodo } = require("./api/todos");
 const { loginUser, signUpUser, resetPassword } = require("./api/users");
-const { checkUser } = require("./util/security");
+const { checkUser, checkGithub } = require("./util/security");
 //Todos
 app.get("/todos", checkUser, getAllTodos);
 app.post("/todos", checkUser, postOneTodo);
@@ -18,7 +18,7 @@ app.post("/signup", signUpUser);
 app.post("/password/reset", resetPassword);
 
 //gists
-app.post("/gists", createGist);
-app.get("/gists", getAllGists);
-app.get("/gists/:id", getGist);
+app.post("/gists", checkGithub, createGist);
+app.get("/gists", checkGithub, getAllGists);
+app.get("/gists/:id", checkGithub, getGist);
 exports.api = functions.https.onRequest(app);

@@ -1,16 +1,14 @@
 const { Octokit } = require("@octokit/rest");
 const GITHUB_TOKEN = require("firebase-functions").config().github.token;
 
-const octokit = new Octokit({
-	auth: GITHUB_TOKEN,
-	userAgent: "firebase-gist 1.0.0",
-});
+// const octokit = new Octokit({
+// 	auth: GITHUB_TOKEN,
+// 	userAgent: "firebase-gist 1.0.0",
+// });
 
 exports.getAllGists = async (req, res) => {
 	try {
-		const gists = await octokit.gists.listForUser({
-			username: "dominickdejesus",
-		});
+		const gists = await res.locals.octokit.gists.list();
 		res.json(gists);
 	} catch (error) {
 		console.log(error.message);
@@ -19,7 +17,7 @@ exports.getAllGists = async (req, res) => {
 
 exports.getGist = async (req, res) => {
 	try {
-		const gist = await octokit.gists.get({
+		const gist = await res.locals.octokit.gists.get({
 			gist_id: req.params.id,
 		});
 		res.json(gist);
@@ -30,7 +28,7 @@ exports.getGist = async (req, res) => {
 
 exports.createGist = async (req, res) => {
 	try {
-		const gist = await octokit.gists.create(req.body);
+		const gist = await res.locals.octokit.gists.create(req.body);
 		res.json(gist);
 	} catch (error) {
 		console.log(error.message);
