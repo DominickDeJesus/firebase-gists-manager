@@ -6,7 +6,7 @@ app.use(cors());
 
 const { getAllTodos, postOneTodo } = require("./api/todos");
 const { loginUser, signUpUser, resetPassword } = require("./api/users");
-const { checkUser } = require("./util/security");
+
 //Todos
 app.get("/todos", getAllTodos);
 app.post("/todos", postOneTodo);
