@@ -1,11 +1,3 @@
-const { Octokit } = require("@octokit/rest");
-const GITHUB_TOKEN = require("firebase-functions").config().github.token;
-
-// const octokit = new Octokit({
-// 	auth: GITHUB_TOKEN,
-// 	userAgent: "firebase-gist 1.0.0",
-// });
-
 exports.getAllGists = async (req, res) => {
 	try {
 		const gists = await res.locals.octokit.gists.list();
