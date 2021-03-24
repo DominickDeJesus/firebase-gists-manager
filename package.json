@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "@octokit/rest": "^18.0.12",
     "firebase": "^8.1.2",
-    "firebase-admin": "^9.4.1",
-    "firebase-functions": "^3.13.0"
+    "firebase-admin": "^9.4.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }

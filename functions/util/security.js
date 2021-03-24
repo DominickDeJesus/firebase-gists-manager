@@ -1,4 +1,6 @@
 const { admin } = require("./admin");
+const { Octokit } = require("@octokit/rest");
+const { createTokenAuth } = require("@octokit/auth-token");
 
 exports.checkUser = async (req, res, next) => {
 	try {
@@ -6,7 +8,21 @@ exports.checkUser = async (req, res, next) => {
 		res.locals.uid = decodedToken.uid;
 		next();
 	} catch (error) {
-		// Handle error
 		res.json(error);
+	}
+};
+
+exports.checkGithub = async (req, res, next) => {
+	const tokenId = req.headers.authorization;
+	try {
+		if (!tokenId) throw Error("Not authorized");
+		const octokit = new Octokit({
+			auth: tokenId,
+			userAgent: "firebase-gist 1.0.0",
+		});
+		res.locals.octokit = octokit;
+		next();
+	} catch (error) {
+		res.json(error.message);
 	}
 };
