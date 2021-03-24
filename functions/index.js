@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = require("express")();
 
 app.use(cors());
-const { getAllGists, createGist, getGist } = require("./api/gists");
+const { getAllGists, createGist, getGist, deleteGist } = require("./api/gists");
 const { getAllTodos, postOneTodo } = require("./api/todos");
 const { loginUser, signUpUser, resetPassword } = require("./api/users");
 const { checkUser, checkGithub } = require("./util/security");
@@ -21,4 +21,5 @@ app.post("/password/reset", resetPassword);
 app.post("/gists", checkGithub, createGist);
 app.get("/gists", checkGithub, getAllGists);
 app.get("/gists/:id", checkGithub, getGist);
+app.delete("/gists/:id", checkGithub, deleteGist);
 exports.api = functions.https.onRequest(app);
