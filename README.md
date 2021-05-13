@@ -1,8 +1,4 @@
-# firebase-example
+# firebase-gist-manager
 
-This is an example project for firebase serverless functions.
+The firebase functions implement the backend for github authentication as well as CRUD opperations for a users gists. 
 
-## Todo
-
-- build out authentication
-- add todo routes for CRUD
